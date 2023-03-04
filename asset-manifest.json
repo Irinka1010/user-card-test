@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/user-card-test/static/css/main.5e6ccb98.css",
+    "main.js": "/user-card-test/static/js/main.72a723ff.js",
+    "static/media/picture.png": "/user-card-test/static/media/picture.b3d9942b3f9d5dad1ff0.png",
+    "index.html": "/user-card-test/index.html",
+    "main.5e6ccb98.css.map": "/user-card-test/static/css/main.5e6ccb98.css.map",
+    "main.72a723ff.js.map": "/user-card-test/static/js/main.72a723ff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5e6ccb98.css",
+    "static/js/main.72a723ff.js"
+  ]
+}
