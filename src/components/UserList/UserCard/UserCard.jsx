@@ -11,20 +11,20 @@ import { useToggle } from '../../../hooks/useToggle';
 
 export const UserCard = ({ user }) => {
   const { id, followers, avatar, tweets } = user;
-  const LS_KEY1 = `followersCount${id}`;
-  const LS_KEY2 = `stateButton${id}`;
+  const LS_KEY_FOLLOWER = `followersCount${id}`;
+  const LS_KEY_BTN = `clickButton${id}`;
 
   const [count, setCount] = useState(() => {
-    return JSON.parse(window.localStorage.getItem(LS_KEY1)) ?? followers;
+    return JSON.parse(window.localStorage.getItem(LS_KEY_FOLLOWER)) ?? followers;
   });
   const [isClick, ToggleClick] = useToggle(() => {
-    return JSON.parse(window.localStorage.getItem(LS_KEY2)) ?? false;
+    return JSON.parse(window.localStorage.getItem(LS_KEY_BTN)) ?? false;
   });
 
   useEffect(() => {
-    window.localStorage.setItem(LS_KEY1, JSON.stringify(count));
-    window.localStorage.setItem(LS_KEY2, JSON.stringify(isClick));
-  }, [count, isClick, LS_KEY1, LS_KEY2]);
+    window.localStorage.setItem(LS_KEY_FOLLOWER, JSON.stringify(count));
+    window.localStorage.setItem(LS_KEY_BTN, JSON.stringify(isClick));
+  }, [count, isClick, LS_KEY_FOLLOWER, LS_KEY_BTN]);
 
   const onLeaveFeedback = () => {
     if (!isClick) {
@@ -56,7 +56,7 @@ export const UserCard = ({ user }) => {
         </div>
       </div>
 
-      <div className={css.contex}>
+      <div className={css.context}>
         <p className={css.text}> {tweets} tweets</p>
         <p className={css.text}> {flwWithPoint} Followers</p>
       </div>
