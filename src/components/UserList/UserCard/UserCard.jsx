@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 
 import css from './UserCard.module.css';
 import logo from '../../../images/logo.png';
-import picture from '../../../images/picture.png';
-import ellipse from '../../../images/ellipse.png';
 
 import { useToggle } from '../../../hooks/useToggle';
 
@@ -38,21 +36,11 @@ export const UserCard = ({ user }) => {
   return (
     <li className={css.box}>
       <div className={css.wrapper}>
-        <div className={css.wrapperImg}>
-          <div className={css.logoBox}>
-            <img className={css.img} src={logo} alt="logo" width="76" />
-          </div>
-          <div className={css.pictureBox}>
-            <img src={picture} alt="pictures" width="308" />
-          </div>
-        </div>
-      </div>
-      <div className={css.line}>
+        <img className={css.logo} src={logo} alt="logo" />
         <div className={css.ellipse}>
-          <img src={ellipse} alt="ellipse" width="80" />
-        </div>
-        <div className={css.avatarBox}>
-          <img src={avatar} alt="avatar" width="62" />
+          <div className={css.avatarBox}>
+            <img className={css.avatar} src={avatar} alt="avatar" />
+          </div>
         </div>
       </div>
 
@@ -60,14 +48,15 @@ export const UserCard = ({ user }) => {
         <p className={css.text}> {tweets} tweets</p>
         <p className={css.text}> {flwWithPoint} Followers</p>
       </div>
-
-      <button
-        type="button"
-        className={!isClick ? css.button : css.active}
-        onClick={() => onLeaveFeedback({ count })}
-      >
-        {!isClick ? 'Follow' : 'Following'}
-      </button>
+      <div className={css.wrapperBtn}>
+        <button
+          type="button"
+          className={!isClick ? css.button : css.active}
+          onClick={() => onLeaveFeedback({ count })}
+        >
+          {!isClick ? 'Follow' : 'Following'}
+        </button>
+      </div>
     </li>
   );
 };
