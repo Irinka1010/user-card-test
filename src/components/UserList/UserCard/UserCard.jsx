@@ -1,45 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
 
 import css from './UserCard.module.css';
 import logo from '../../../images/logo.png';
+import { normalizeNumber } from '../../../utilities';
 
-import { useToggle } from '../../../hooks/useToggle';
-
-export const UserCard = ({ user }) => {
-  const { id, followers, avatar, tweets } = user;
-  const LS_KEY_FOLLOWER = `followersCount${id}`;
-  const LS_KEY_BTN = `clickButton${id}`;
-
-  const [count, setCount] = useState(() => {
-    return JSON.parse(window.localStorage.getItem(LS_KEY_FOLLOWER)) ?? followers;
-  });
-  const [isClick, ToggleClick] = useToggle(() => {
-    return JSON.parse(window.localStorage.getItem(LS_KEY_BTN)) ?? false;
-  });
-
-  useEffect(() => {
-    window.localStorage.setItem(LS_KEY_FOLLOWER, JSON.stringify(count));
-    window.localStorage.setItem(LS_KEY_BTN, JSON.stringify(isClick));
-  }, [count, isClick, LS_KEY_FOLLOWER, LS_KEY_BTN]);
-
-  const onLeaveFeedback = () => {
-    if (!isClick) {
-      setCount(prev => prev + 1);
-      ToggleClick();
-    } else setCount(prev => prev - 1);
-    ToggleClick();
-  };
-
-  const flwWithPoint = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+export const UserCard = ({
+  users: { user, id, tweets, followers, avatar, isFollow },
+  toggleFollow,
+}) => {
+  const flwWithPoint = normalizeNumber(followers);
   return (
-    <li className={css.box}>
+    <>
       <div className={css.wrapper}>
         <img className={css.logo} src={logo} alt="logo" />
         <div className={css.ellipse}>
           <div className={css.avatarBox}>
-            <img className={css.avatar} src={avatar} alt="avatar" />
+            <img className={css.avatar} src={avatar} alt={user} />
           </div>
         </div>
       </div>
@@ -51,21 +28,22 @@ export const UserCard = ({ user }) => {
       <div className={css.wrapperBtn}>
         <button
           type="button"
-          className={!isClick ? css.button : css.active}
-          onClick={() => onLeaveFeedback({ count })}
+          className={!isFollow ? css.button : css.active}
+          onClick={() => toggleFollow(id)}
         >
-          {!isClick ? 'Follow' : 'Following'}
+          {!isFollow ? 'Follow' : 'Following'}
         </button>
       </div>
-    </li>
+    </>
   );
 };
 
 UserCard.propTypes = {
-  user: PropTypes.shape({
+  users: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    followers: PropTypes.number.isRequired,
-    avatar: PropTypes.string.isRequired,
     tweets: PropTypes.number.isRequired,
+    followers: PropTypes.number.isRequired,
+    isFollow: PropTypes.bool,
   }).isRequired,
+  toggleFollow: PropTypes.func,
 };
